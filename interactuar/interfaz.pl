@@ -4,6 +4,7 @@
 :- use_module('../data/conocimientos').
 :- use_module('../data/informacion_enfermedades'). 
 :- use_module('../data/medicamentos').
+:- use_module('../data/estilo_vida').
 
 % Predicado principal que inicia el bucle de interacción
 interfaz :-
@@ -15,7 +16,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 4 -> bucle_interaccion ; true).
+    (Opcion \= 5 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -23,7 +24,8 @@ mostrar_opciones :-
     write('1. Diagnóstico de síntomas'), nl,
     write('2. Información sobre enfermedades'), nl,
     write('3. Información sobre medicamentos'), nl,
-    write('4. Salir'), nl.
+    write('4. Consejos para mejorar tu calidad de vida'), nl,
+    write('5. Salir'), nl.
 
 % Leer la opción elegida por el usuario
 leer_opcion(Opcion) :-
@@ -51,6 +53,13 @@ manejar_opcion(3) :-
     mostrar_informacion_medicamento(Medicamento).
 
 manejar_opcion(4) :-
+    !,  % Corte para evitar backtracking después de elegir esta opción
+    write('Introduce tu edad: '), nl,
+    read(Edad),  
+    estilo_vida(Edad, Consejo),
+    write('Consejo: '), write(Consejo), nl.
+      
+manejar_opcion(5) :-
     !,  % Corte para evitar backtracking después de elegir esta opción
     write('Gracias por usar el Asistente Médico. ¡Adiós!'), nl.
 
