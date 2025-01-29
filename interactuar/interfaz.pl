@@ -3,6 +3,7 @@
 :- use_module('../core/diagnostico').
 :- use_module('../data/conocimientos').
 :- use_module('../data/informacion_enfermedades'). 
+:- use_module('../data/medicamentos').
 
 % Predicado principal que inicia el bucle de interacción
 interfaz :-
@@ -14,14 +15,15 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 3 -> bucle_interaccion ; true).
+    (Opcion \= 4 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
     write('Por favor, elige una opción:'), nl,
     write('1. Diagnóstico de síntomas'), nl,
     write('2. Información sobre enfermedades'), nl,
-    write('3. Salir'), nl.
+    write('3. Información sobre medicamentos'), nl,
+    write('4. Salir'), nl.
 
 % Leer la opción elegida por el usuario
 leer_opcion(Opcion) :-
@@ -39,10 +41,16 @@ manejar_opcion(1) :-
 manejar_opcion(2) :-
     !,  % Corte para evitar backtracking después de elegir esta opción
     write('Introduce el nombre de la enfermedad: '), nl,
-    read(Enfermedad),  % Usa read/1 para diagnóstico
+    read(Enfermedad),  
     mostrar_informacion_enfermedad(Enfermedad).
 
 manejar_opcion(3) :-
+    !,  % Corte para evitar backtracking después de elegir esta opción
+    write('Introduce el nombre del medicamento: '), nl,
+    read(Medicamento),  
+    mostrar_informacion_medicamento(Medicamento).
+
+manejar_opcion(4) :-
     !,  % Corte para evitar backtracking después de elegir esta opción
     write('Gracias por usar el Asistente Médico. ¡Adiós!'), nl.
 
@@ -98,3 +106,17 @@ imprimir_lista([Cabeza|Cola]) :-
 string_replace(Input, Find, Replace, Output) :-
     split_string(Input, Find, "", List),
     atomic_list_concat(List, Replace, Output).
+
+% Mostrar información detallada sobre el medicamento
+mostrar_informacion_medicamento(Medicamento) :-
+    informacion_medicamento(Medicamento, Info),
+    write('Información sobre el medicamento: '), write(Medicamento), nl,
+    mostrar_lista(Info).
+
+mostrar_informacion_medicamento(_) :-
+    write('Lo siento, no tengo información sobre esa medicamento.'), nl.
+
+mostrar_lista([]).
+mostrar_lista([Cabeza|Cola]) :-
+    write(Cabeza), nl,
+    mostrar_lista(Cola).
