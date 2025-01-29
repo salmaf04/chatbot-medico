@@ -17,3 +17,6 @@ contar_sintomas(SintomasUsuario, Enfermedad, (Puntuacion, Enfermedad)) :-
 sugerir_tratamiento(Enfermedad) :-
     tratamiento(Enfermedad, Tratamiento),
     write('Tratamiento recomendado: '), write(Tratamiento), nl.
+
+
+
