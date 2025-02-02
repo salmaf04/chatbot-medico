@@ -29,7 +29,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 13 -> bucle_interaccion ; true).
+    (Opcion \= 14 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -46,7 +46,8 @@ mostrar_opciones :-
     write_color('10. Soporte para pacientes con cáncer', cyan),
     write_color('11. Crear usuario', cyan),  
     write_color('12. Ver historial clínico', cyan),
-    write_color('13. Salir', red),
+    write_color('13. Eliminar usuario', cyan),
+    write_color('14. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -182,8 +183,15 @@ manejar_opcion(12) :-
         )
     ;   write_color('Usuario no encontrado.', red), nl
     ).
-      
+
 manejar_opcion(13) :-
+    !,
+    write_color('Eliminar usuario:', green), nl,
+    write_color('Introduce el ID del usuario que deseas eliminar: ', blue), nl,
+    read(ID),
+    eliminar_usuario(ID).
+      
+manejar_opcion(14) :-
     !,
     guardar_usuarios,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.

@@ -1,5 +1,6 @@
 :- module(usuarios, [
     crear_usuario/2,
+    eliminar_usuario/1,
     guardar_historial/4,  % Ahora recibe 4 argumentos (ID, Enfermedad, Sintomas, Fecha)
     obtener_historial/2,
     cargar_usuarios/0,
@@ -44,3 +45,12 @@ guardar_historial(ID, Enfermedad, Sintomas, Fecha) :-
 % Obtener el historial clínico de un usuario
 obtener_historial(ID, Historial) :-
     findall((Enfermedad, Sintomas, Fecha), historial(ID, Enfermedad, Sintomas, Fecha), Historial).
+
+% Predicado para eliminar un usuario y su historial clínico
+eliminar_usuario(ID) :-
+    (   usuario(ID, _)  % Verifica si el usuario existe
+    ->  retractall(usuario(ID, _)),  % Elimina el usuario
+        retractall(historial(ID, _, _, _)),  % Elimina su historial clínico
+        write_color('Usuario y su historial clínico eliminados exitosamente.', green), nl
+    ;   write_color('Error: El usuario no existe.', red), nl
+    ).

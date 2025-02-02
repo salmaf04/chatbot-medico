@@ -3,54 +3,54 @@
 :- use_module('../data/conocimientos').
 
 % Pesos de los síntomas 
-peso_sintoma(fiebre, 1).                     
-peso_sintoma('dolor de cabeza', 1).          
-peso_sintoma(estornudos, 3).                 
-peso_sintoma('congestión nasal', 1).         
-peso_sintoma('malestar general', 1).         
-peso_sintoma('dolor de garganta', 2).        
-peso_sintoma(tos, 1).                        
-peso_sintoma('dificultad respiratoria', 2).  
-peso_sintoma('pérdida del olfato', 4).       
-peso_sintoma('pérdida del gusto', 4).        
-peso_sintoma('dolor muscular', 3).           
-peso_sintoma(fatiga, 1).                     
-peso_sintoma(náuseas, 2).                    
-peso_sintoma(vómito, 3).                     
-peso_sintoma(diarrea, 3).                    
-peso_sintoma(desorientación, 4).             
-peso_sintoma('temperatura baja', 4).         
-peso_sintoma('dolor en el pecho', 3).        
-peso_sintoma('dificultad para tragar', 4).   
-peso_sintoma('ganglios inflamados', 4).      
-peso_sintoma('dolor facial', 4).             
-peso_sintoma('dolor abdominal', 3).          
-peso_sintoma('dolor de oído', 4).            
-peso_sintoma('pérdida de audición', 4).      
-peso_sintoma(irritabilidad, 4).              
-peso_sintoma('enrojecimiento ocular', 4).    
-peso_sintoma(picazón, 3).                    
-peso_sintoma(lagrimeo, 3).                   
-peso_sintoma('secreción ocular', 4).         
-peso_sintoma('dolor articular', 4).          
-peso_sintoma(hinchazón, 4).                  
-peso_sintoma(rigidez, 2).                    
-peso_sintoma('silbidos en el pecho', 4).            
-peso_sintoma(mareos, 2).                     
-peso_sintoma('visión borrosa', 3).                               
-peso_sintoma('micción frecuente', 4).        
-peso_sintoma('dolor de cabeza intenso', 4).  
-peso_sintoma('sensibilidad a la luz', 4).      
-peso_sintoma('sensibilidad al ruido', 4).      
-peso_sintoma(nerviosismo, 4).                
-peso_sintoma(sudoración, 4).                 
-peso_sintoma(palpitaciones, 4).              
-peso_sintoma(insomnio, 4).                   
-peso_sintoma(tristeza, 4).                   
-peso_sintoma('pérdida de apetito', 4).    
-peso_sintoma('opresión en el pecho', 4).
-peso_sintoma('sed excesiva', 4).   
-peso_sintoma('visión borrosa', 4).
+peso_sintoma(fiebre, 18).                     
+peso_sintoma('dolor de cabeza', 18).          
+peso_sintoma(estornudos, 20).                 
+peso_sintoma('congestión nasal', 18).         
+peso_sintoma('malestar general', 18).         
+peso_sintoma('dolor de garganta', 19).        
+peso_sintoma(tos, 18).                        
+peso_sintoma('dificultad respiratoria', 19).  
+peso_sintoma('pérdida del olfato', 21).       
+peso_sintoma('pérdida del gusto', 21).        
+peso_sintoma('dolor muscular', 20).           
+peso_sintoma(fatiga, 18).                     
+peso_sintoma(náuseas, 19).                    
+peso_sintoma(vómito, 20).                     
+peso_sintoma(diarrea, 20).                    
+peso_sintoma(desorientación, 21).             
+peso_sintoma('temperatura baja', 21).         
+peso_sintoma('dolor en el pecho', 20).        
+peso_sintoma('dificultad para tragar', 21).   
+peso_sintoma('ganglios inflamados', 21).      
+peso_sintoma('dolor facial', 21).             
+peso_sintoma('dolor abdominal', 20).          
+peso_sintoma('dolor de oído', 21).            
+peso_sintoma('pérdida de audición', 21).      
+peso_sintoma(irritabilidad, 21).              
+peso_sintoma('enrojecimiento ocular', 21).    
+peso_sintoma(picazón, 20).                    
+peso_sintoma(lagrimeo, 20).                   
+peso_sintoma('secreción ocular', 21).         
+peso_sintoma('dolor articular', 21).          
+peso_sintoma(hinchazón, 21).                  
+peso_sintoma(rigidez, 19).                    
+peso_sintoma('silbidos en el pecho', 21).            
+peso_sintoma(mareos, 19).                     
+peso_sintoma('visión borrosa', 20).                               
+peso_sintoma('micción frecuente', 21).        
+peso_sintoma('dolor de cabeza intenso', 21).  
+peso_sintoma('sensibilidad a la luz', 21).      
+peso_sintoma('sensibilidad al ruido', 21).      
+peso_sintoma(nerviosismo, 21).                
+peso_sintoma(sudoración, 21).                 
+peso_sintoma(palpitaciones, 21).              
+peso_sintoma(insomnio, 21).                   
+peso_sintoma(tristeza, 21).                   
+peso_sintoma('pérdida de apetito', 21).    
+peso_sintoma('opresión en el pecho', 21).
+peso_sintoma('sed excesiva', 21).   
+peso_sintoma('visión borrosa', 21).
 
 % Definir pesos base para las enfermedades
 peso_enfermedad(gripe, 16).      
