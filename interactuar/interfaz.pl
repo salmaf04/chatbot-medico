@@ -12,7 +12,7 @@
 :- use_module('../data/embarazo_cuidado_infantil').
 :- use_module('../data/soporte_cancer').
 :- use_module('../data/soporte_personas_mayores').
-
+:- use_module('../data/soporte_estudiantes').
 
 % Predicado para imprimir texto en color
 write_color(Mensaje, Color) :-
@@ -28,7 +28,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 10 -> bucle_interaccion ; true).
+    (Opcion \= 11 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -40,9 +40,10 @@ mostrar_opciones :-
     write_color('5. Información sobre medicamentos', cyan),
     write_color('6. Consejos para mejorar tu calidad de vida', cyan),
     write_color('7. Embarazo y cuidado infantil', cyan),
-    write_color('8. Soporte para pacientes con cáncer', cyan),
+    write_color('8. Soporte para estudiantes', cyan),
     write_color('9. Soporte para personas mayores', cyan),
-    write_color('10. Salir', red),
+    write_color('10. Soporte para pacientes con cáncer', cyan),
+    write_color('11. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -125,13 +126,15 @@ manejar_opcion(7) :-
 
 manejar_opcion(8) :-
     !,
-    write_color('Soporte para pacientes con cáncer:', green), nl,
-    write_color('1. Tratamientos', cyan),
-    write_color('2. Efectos secundarios', cyan),
-    write_color('3. Apoyo emocional', cyan),
-    write_color('4. Regresar al menú principal', red), nl,
+    write_color('Soporte para estudiantes:', green), nl,
+    write_color('1. Recomendaciones para mejorar el estudio', cyan),
+    write_color('2. Manejo del estrés', cyan),
+    write_color('3. Hábitos saludables para estudiantes', cyan),
+    write_color('4. Técnicas para mejorar la concentración', cyan),
+    write_color('5. Recursos educativos recomendados', cyan),
+    write_color('6. Regresar al menú principal', red), nl,
     read(Opcion),
-    manejar_opcion_cancer(Opcion).
+    manejar_opcion_estudiantes(Opcion).
 
 manejar_opcion(9) :-
     !,
@@ -143,8 +146,18 @@ manejar_opcion(9) :-
     write_color('5. Regresar al menú principal', red), nl,
     read(Opcion),
     manejar_opcion_personas_mayores(Opcion).
-      
+
 manejar_opcion(10) :-
+    !,
+    write_color('Soporte para pacientes con cáncer:', green), nl,
+    write_color('1. Tratamientos', cyan),
+    write_color('2. Efectos secundarios', cyan),
+    write_color('3. Apoyo emocional', cyan),
+    write_color('4. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_cancer(Opcion).
+      
+manejar_opcion(11) :-
     !,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
