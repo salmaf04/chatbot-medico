@@ -11,6 +11,7 @@
 :- use_module('../data/numero_emergencias').
 :- use_module('../data/embarazo_cuidado_infantil').
 :- use_module('../data/soporte_cancer').
+:- use_module('../data/soporte_personas_mayores').
 
 
 % Predicado para imprimir texto en color
@@ -27,7 +28,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 9 -> bucle_interaccion ; true).
+    (Opcion \= 10 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -40,7 +41,8 @@ mostrar_opciones :-
     write_color('6. Consejos para mejorar tu calidad de vida', cyan),
     write_color('7. Embarazo y cuidado infantil', cyan),
     write_color('8. Soporte para pacientes con cáncer', cyan),
-    write_color('9. Salir', red),
+    write_color('9. Soporte para personas mayores', cyan),
+    write_color('10. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -130,8 +132,19 @@ manejar_opcion(8) :-
     write_color('4. Regresar al menú principal', red), nl,
     read(Opcion),
     manejar_opcion_cancer(Opcion).
-      
+
 manejar_opcion(9) :-
+    !,
+    write_color('Recomendaciones para personas mayores:', green), nl,
+    write_color('1. Recomendaciones generales de salud', cyan),
+    write_color('2. Prevención de caídas', cyan),
+    write_color('3. Manejo de medicamentos', cyan),
+    write_color('4. Actividades para mantener la mente activa', cyan),
+    write_color('5. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_personas_mayores(Opcion).
+      
+manejar_opcion(10) :-
     !,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
