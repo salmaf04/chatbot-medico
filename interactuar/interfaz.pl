@@ -1,14 +1,20 @@
-:- module(interfaz, [interfaz/0, procesar_sintomas/1]).
+:- module(interfaz, [interfaz/0, procesar_sintomas/1, write_color/2]).
+
 
 :- use_module('../core/diagnostico').
 :- use_module('../data/conocimientos').
-:- use_module('../data/informacion_enfermedades'). 
+:- use_module('../data/informacion_enfermedades').
+:- use_module('../data/especialidades'). 
 :- use_module('../data/medicamentos').
 :- use_module('../data/estilo_vida').
 
+% Predicado para imprimir texto en color
+write_color(Mensaje, Color) :-
+    ansi_format([fg(Color), bold], '~w', [Mensaje]), nl.
+
 % Predicado principal que inicia el bucle de interacción
 interfaz :-
-    write('Bienvenido al Asistente Médico'), nl,
+    write_color('¡Bienvenido al Asistente Médico!', green),
     bucle_interaccion.
 
 % Bucle de interacción que permite al usuario elegir opciones
@@ -20,12 +26,13 @@ bucle_interaccion :-
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
-    write('Por favor, elige una opción:'), nl,
-    write('1. Diagnóstico de síntomas'), nl,
-    write('2. Información sobre enfermedades'), nl,
-    write('3. Información sobre medicamentos'), nl,
-    write('4. Consejos para mejorar tu calidad de vida'), nl,
-    write('5. Salir'), nl.
+    write_color('Por favor, elige una opción:', blue), 
+    write_color('1. Diagnóstico de síntomas', cyan),
+    write_color('2. Información sobre enfermedades', cyan),
+    write_color('3. Información sobre medicamentos', cyan),
+    write_color('4. Consejos para mejorar tu calidad de vida', cyan),
+    write_color('5. Salir', red),
+    nl.
 
 % Leer la opción elegida por el usuario
 leer_opcion(Opcion) :-
@@ -35,47 +42,53 @@ leer_opcion(Opcion) :-
 
 % Manejar la opción elegida por el usuario
 manejar_opcion(1) :-
-    !,  % Corte para evitar backtracking después de elegir esta opción
-    write('Introduce tus síntomas separados por comas: '), nl,
-    read(SintomasString),
-    procesar_sintomas(SintomasString).
+    !,  
+    write_color('Introduce tus síntomas separados por comas: ', blue), nl,
+    read(SintomasString),  
+    (   SintomasString \= ""  % Verifica que la cadena no esté vacía
+    ->  procesar_sintomas(SintomasString), !
+    ;   write_color('Por favor, introduce al menos un síntoma.', red), nl,
+        flush_output,  % Vacía el buffer de salida
+        manejar_opcion(1)
+    ).
 
 manejar_opcion(2) :-
-    !,  % Corte para evitar backtracking después de elegir esta opción
-    write('Introduce el nombre de la enfermedad: '), nl,
+    !,  
+    write_color('Introduce el nombre de la enfermedad: ', blue), nl,
     read(Enfermedad),  
     mostrar_informacion_enfermedad(Enfermedad).
 
 manejar_opcion(3) :-
-    !,  % Corte para evitar backtracking después de elegir esta opción
-    write('Introduce el nombre del medicamento: '), nl,
+    !,  
+    write_color('Introduce el nombre del medicamento: ', blue), nl,
     read(Medicamento),  
     mostrar_informacion_medicamento(Medicamento).
 
 manejar_opcion(4) :-
-    !,  % Corte para evitar backtracking después de elegir esta opción
-    write('Introduce tu edad: '), nl,
+    !,  
+    write_color('Introduce tu edad: ', blue), nl,
     read(Edad),  
     estilo_vida(Edad, Consejo),
-    write('Consejo: '), write(Consejo), nl.
+    write_color('Consejo: ', green), write_color(Consejo, yellow), nl.
       
 manejar_opcion(5) :-
-    !,  % Corte para evitar backtracking después de elegir esta opción
-    write('Gracias por usar el Asistente Médico. ¡Adiós!'), nl.
+    !,
+    write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
 manejar_opcion(_) :-
-    !,  % Corte para evitar backtracking después de manejar una opción no válida
-    write('Opción no válida. Por favor, intenta de nuevo.'), nl.
+    !,  
+    write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl.
 
-% Mostrar información detallada sobre la enfermedad
+
 mostrar_informacion_enfermedad(Enfermedad) :-
-    informacion_enfermedad(Enfermedad, causas(Causas), sintomas(Sintomas), complicaciones(Complicaciones)),
+    informacion_enfermedad(Enfermedad, causas(Causas), sintomas(Sintomas), complicaciones(Complicaciones), vacunas(Vacunas)),
     format('~nInformación sobre ~w:~n', [Enfermedad]),
-    write('Causas: '), imprimir_lista_sin_corchetes(Causas), nl,
-    write('Síntomas: '), imprimir_lista_sin_corchetes(Sintomas), nl,
-    write('Complicaciones: '), imprimir_lista_sin_corchetes(Complicaciones), nl.
+    write_color('Causas: ', blue), imprimir_lista_sin_corchetes(Causas), nl,
+    write_color('Síntomas: ', blue), imprimir_lista_sin_corchetes(Sintomas), nl,
+    write_color('Complicaciones: ', blue), imprimir_lista_sin_corchetes(Complicaciones), nl,
+    write_color('Vacunas: ', blue), imprimir_lista(Vacunas), nl.
 mostrar_informacion_enfermedad(_) :-
-    write('Lo siento, no tengo información sobre esa enfermedad.'), nl.
+    write_color('Lo siento, no tengo información sobre esa enfermedad.', red), nl.
 
 % Predicado para imprimir cada elemento de la lista en una línea separada por comas
 imprimir_lista_sin_corchetes([]).
@@ -97,18 +110,16 @@ procesar_sintomas(SintomasString) :-
     maplist(atom_string, SintomasAtoms, SintomasList),
     diagnosticar(SintomasAtoms, Enfermedad),
     (   Enfermedad = desconocida
-    ->  write('Lo siento, no pude identificar los síntomas, intenta de nuevo.'), nl
-    ;   write('Parece que podrías tener: '), write(Enfermedad), nl,
-        sugerir_tratamiento(Enfermedad),
-        informacion_vacuna(Enfermedad, Info),
-        write('Información sobre vacunas: '), nl,
-        imprimir_lista(Info)
-    ).
+    ->  write_color('Lo siento, no pude identificar los síntomas, intenta de nuevo.', red), nl
+    ;   write_color('Parece que podrías tener: ', green), write_color(Enfermedad, yellow), nl,
+        write_color('Tratamiento recomendado: ', green), sugerir_tratamiento(Enfermedad), nl,
+        recomendacion_especialista(Enfermedad)
+).
 
 % Predicado para imprimir cada elemento de la lista en una nueva línea
 imprimir_lista([]).
 imprimir_lista([Cabeza|Cola]) :-
-    write(Cabeza), nl,
+    write_color(Cabeza, cyan), nl,
     imprimir_lista(Cola).
 
 % Predicado auxiliar para reemplazar caracteres en una cadena
@@ -119,13 +130,13 @@ string_replace(Input, Find, Replace, Output) :-
 % Mostrar información detallada sobre el medicamento
 mostrar_informacion_medicamento(Medicamento) :-
     informacion_medicamento(Medicamento, Info),
-    write('Información sobre el medicamento: '), write(Medicamento), nl,
+    write_color('Información sobre el medicamento: ', green), write_color(Medicamento, yellow), nl,
     mostrar_lista(Info).
 
 mostrar_informacion_medicamento(_) :-
-    write('Lo siento, no tengo información sobre esa medicamento.'), nl.
+    write_color('Lo siento, no tengo información sobre ese medicamento.', red), nl.
 
 mostrar_lista([]).
 mostrar_lista([Cabeza|Cola]) :-
-    write(Cabeza), nl,
+    write_color(Cabeza, cyan), nl,
     mostrar_lista(Cola).

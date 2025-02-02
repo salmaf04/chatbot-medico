@@ -1,9 +1,9 @@
 :- [data/conocimientos].
 :- [data/aprendizaje].
 :- [data/especialidades].
-:- [data/vacunas].
 :- [data/medicamentos].
 :- [data/estilo_vida].
+:- [data/informacion_enfermedades].
 :- [core/diagnostico].
 :- [interactuar/interfaz].
 
