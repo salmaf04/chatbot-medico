@@ -13,6 +13,7 @@
 :- use_module('../data/soporte_cancer').
 :- use_module('../data/soporte_personas_mayores').
 :- use_module('../data/soporte_estudiantes').
+:- use_module('../data/pacientes_enfermedades_autoinmunes').
 :- use_module('../users/usuarios').
 
 % Predicado para imprimir texto en color
@@ -29,7 +30,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 14 -> bucle_interaccion ; true).
+    (Opcion \= 18 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -44,10 +45,11 @@ mostrar_opciones :-
     write_color('8. Soporte para estudiantes', cyan),
     write_color('9. Soporte para personas mayores', cyan),
     write_color('10. Soporte para pacientes con cáncer', cyan),
-    write_color('11. Crear usuario', cyan),  
-    write_color('12. Ver historial clínico', cyan),
-    write_color('13. Eliminar usuario', cyan),
-    write_color('14. Salir', red),
+    write_color('11. Soporte para pacientes con enfermedades autoinmunes', cyan),
+    write_color('15. Crear usuario', cyan),  
+    write_color('16. Ver historial clínico', cyan),
+    write_color('17. Eliminar usuario', cyan),
+    write_color('18. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -163,6 +165,17 @@ manejar_opcion(10) :-
 
 manejar_opcion(11) :-
     !,
+    write_color('Soporte para enfermedades autoinmunes:', green), nl,
+    write_color('1. Información sobre enfermedades', cyan),
+    write_color('2. Manejo de enfermedades', cyan),
+    write_color('3. Tratamientos comunes', cyan),
+    write_color('4. Consejos para mejorar la calidad de vida', cyan),
+    write_color('5. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_autoinmunes(Opcion).
+
+manejar_opcion(15) :-
+    !,
     write_color('Crear usuario:', green), nl,
     write_color('Introduce un ID único para el usuario (por ejemplo, "user123"): ', blue), nl,
     read(ID),
@@ -170,7 +183,7 @@ manejar_opcion(11) :-
     read(Nombre),
     crear_usuario(ID, Nombre).
 
-manejar_opcion(12) :-
+manejar_opcion(16) :-
     !,
     write_color('Ver historial clínico:', green), nl,
     write_color('Introduce el ID del usuario: ', blue), nl,
@@ -184,14 +197,14 @@ manejar_opcion(12) :-
     ;   write_color('Usuario no encontrado.', red), nl
     ).
 
-manejar_opcion(13) :-
+manejar_opcion(17) :-
     !,
     write_color('Eliminar usuario:', green), nl,
     write_color('Introduce el ID del usuario que deseas eliminar: ', blue), nl,
     read(ID),
     eliminar_usuario(ID).
       
-manejar_opcion(14) :-
+manejar_opcion(18) :-
     !,
     guardar_usuarios,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
@@ -284,3 +297,82 @@ mostrar_lista([]).
 mostrar_lista([Cabeza|Cola]) :-
     write_color(Cabeza, cyan), nl,
     mostrar_lista(Cola).
+
+% Predicado para manejar las opciones de enfermedades autoinmunes
+manejar_opcion_autoinmunes(1) :-
+    !,
+    write_color('Selecciona una enfermedad:', green), nl,
+    write_color('1. Lupus', cyan),
+    write_color('2. Artritis reumatoide', cyan),
+    write_color('3. Esclerosis múltiple', cyan),
+    write_color('4. Regresar al menú anterior', red), nl,
+    read(OpcionEnfermedad),
+    (   OpcionEnfermedad = 1 -> informacion_enfermedad(lupus)
+    ;   OpcionEnfermedad = 2 -> informacion_enfermedad(artritis_reumatoide)
+    ;   OpcionEnfermedad = 3 -> informacion_enfermedad(esclerosis_multiple)
+    ;   OpcionEnfermedad = 4 -> write_color('Regresando al menú anterior...', green), nl,
+        sleep(0.5),
+        manejar_opcion(11)
+    ; write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl
+    ).  
+      
+manejar_opcion_autoinmunes(2) :-
+    !,
+    write_color('Selecciona una enfermedad:', green), nl,
+    write_color('1. Lupus', cyan),
+    write_color('2. Artritis reumatoide', cyan),
+    write_color('3. Esclerosis múltiple', cyan),
+    write_color('4. Regresar al menú anterior', red), nl,
+    read(OpcionEnfermedad),
+    (   OpcionEnfermedad = 1 -> manejo_enfermedad_autoinmune(lupus)
+    ;   OpcionEnfermedad = 2 -> manejo_enfermedad_autoinmune(artritis_reumatoide)
+    ;   OpcionEnfermedad = 3 -> manejo_enfermedad_autoinmune(esclerosis_multiple)
+    ;   OpcionEnfermedad = 4 -> write_color('Regresando al menú anterior...', green), nl,
+        sleep(0.5),
+        manejar_opcion(11)
+    ; write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl
+    ).
+ 
+
+manejar_opcion_autoinmunes(3) :-
+    !,
+    write_color('Selecciona una enfermedad:', green), nl,
+    write_color('1. Lupus', cyan), nl,
+    write_color('2. Artritis reumatoide', cyan), nl,
+    write_color('3. Esclerosis múltiple', cyan), nl,
+    write_color('4. Regresar al menú anterior', red), nl,
+    read(OpcionEnfermedad),
+    (   OpcionEnfermedad = 1 -> tratamientos_comunes(lupus)
+    ;   OpcionEnfermedad = 2 -> tratamientos_comunes(artritis_reumatoide)
+    ;   OpcionEnfermedad = 3 -> tratamientos_comunes(esclerosis_multiple)
+    ;   OpcionEnfermedad = 4 -> write_color('Regresando al menú anterior...', green), nl,
+        sleep(0.5),
+        manejar_opcion(11)
+    ;   write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl
+    ).
+
+manejar_opcion_autoinmunes(4) :-
+    !,
+    write_color('Selecciona una enfermedad:', green), nl,
+    write_color('1. Lupus', cyan), nl,
+    write_color('2. Artritis reumatoide', cyan), nl,
+    write_color('3. Esclerosis múltiple', cyan), nl,
+    write_color('4. Regresar al menú anterior', red), nl,
+    read(OpcionEnfermedad),
+    (   OpcionEnfermedad = 1 -> consejos_calidad_vida(lupus)
+    ;   OpcionEnfermedad = 2 -> consejos_calidad_vida(artritis_reumatoide)
+    ;   OpcionEnfermedad = 3 -> consejos_calidad_vida(esclerosis_multiple)
+    ;   OpcionEnfermedad = 4 -> write_color('Regresando al menú anterior...', green), nl,
+        sleep(0.5),
+        manejar_opcion(11)
+    ;   write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl
+    ).
+
+manejar_opcion_autoinmunes(5) :-
+    !,
+    write_color('Regresando al menú principal...', green), nl,
+    sleep(0.5).
+
+manejar_opcion_autoinmunes(_) :-
+    !,
+    write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl.

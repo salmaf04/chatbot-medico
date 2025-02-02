@@ -1,61 +1,96 @@
-:- module(primeros_auxilios, [manejar_opcion_emergencia/1]).
+% enfermedades_autoinmunes.pl
 
+:- module(enfermedades_autoinmunes, [
+    informacion_enfermedad/2,
+    manejo_enfermedad/2,
+    tratamientos_comunes/2,
+    consejos_calidad_vida/2
+]).
 
-% Manejar la opción de emergencia elegida por el usuario
-manejar_opcion_emergencia(1) :-
-    !,  
-    write_color('Primeros auxilios para quemaduras:', green), nl,
-    write_color('1. Enfría la quemadura con agua fría durante 10-15 minutos.', cyan), nl,
-    write_color('2. No uses hielo ni agua helada.', cyan), nl,
-    write_color('3. Cubre la quemadura con un paño limpio y seco.', cyan), nl,
-    write_color('4. No apliques cremas, aceites ni remedios caseros.', cyan), nl,
-    write_color('5. Busca atención médica si la quemadura es grave.', cyan), nl.
+% Información básica sobre enfermedades autoinmunes
+informacion_enfermedad(lupus, Informacion) :-
+    Informacion = [
+        'El lupus es una enfermedad autoinmune que puede afectar múltiples órganos.',
+        'Síntomas comunes: fatiga, dolor articular, erupciones cutáneas y fiebre.',
+        'Puede ser difícil de diagnosticar debido a la variedad de síntomas.'
+    ].
 
-manejar_opcion_emergencia(2) :-
-    !,  
-    write_color('Primeros auxilios para cortes y heridas:', green), nl,
-    write_color('1. Limpia la herida con agua y jabón.', cyan), nl,
-    write_color('2. Aplica presión con un paño limpio para detener el sangrado.', cyan), nl,
-    write_color('3. Cubre la herida con una venda o gasa estéril.', cyan), nl,
-    write_color('4. Busca atención médica si la herida es profunda o no deja de sangrar.', cyan), nl.
+informacion_enfermedad(artritis_reumatoide, Informacion) :-
+    Informacion = [
+        'La artritis reumatoide es una enfermedad autoinmune que afecta las articulaciones.',
+        'Síntomas comunes: dolor, hinchazón y rigidez en las articulaciones.',
+        'Puede causar daño permanente en las articulaciones si no se trata.'
+    ].
 
-manejar_opcion_emergencia(3) :-
-    !,  
-    write_color('Primeros auxilios para atragantamiento:', green), nl,
-    write_color('1. Si la persona puede toser, anímala a seguir tosiendo.', cyan), nl,
-    write_color('2. Si no puede toser, realiza la maniobra de Heimlich:', cyan), nl,
-    write_color('   - Colócate detrás de la persona y rodea su cintura.', cyan), nl,
-    write_color('   - Coloca un puño sobre su abdomen, justo encima del ombligo.', cyan), nl,
-    write_color('   - Sujeta tu puño con la otra mano y realiza compresiones rápidas hacia arriba.', cyan), nl,
-    write_color('3. Llama al servicio de emergencias si el objeto no sale.', cyan), nl.
+informacion_enfermedad(esclerosis_multiple, Informacion) :-
+    Informacion = [
+        'La esclerosis múltiple es una enfermedad autoinmune que afecta el sistema nervioso central.',
+        'Síntomas comunes: fatiga, dificultad para caminar, entumecimiento y problemas de visión.',
+        'Es una enfermedad crónica que requiere manejo a largo plazo.'
+    ].
 
-manejar_opcion_emergencia(4) :-
-    !,  
-    write_color('Primeros auxilios para desmayos:', green), nl,
-    write_color('1. Acuesta a la persona boca arriba y eleva sus piernas.', cyan), nl,
-    write_color('2. Asegúrate de que tenga espacio para respirar.', cyan), nl,
-    write_color('3. Si la persona no recupera la conciencia en 1-2 minutos, llama al servicio de emergencias.', cyan), nl.
+% Recomendaciones para manejar enfermedades autoinmunes
+manejo_enfermedad(lupus, Recomendaciones) :-
+    Recomendaciones = [
+        'Evita la exposición al sol y usa protector solar.',
+        'Mantén una dieta equilibrada y evita alimentos procesados.',
+        'Realiza ejercicio moderado para mantener la movilidad y reducir el estrés.'
+    ].
 
-manejar_opcion_emergencia(5) :-
-    !,  
-    write_color('Primeros auxilios para fracturas:', green), nl,
-    write_color('1. Inmoviliza la zona afectada con una férula o un cabestrillo.', cyan), nl,
-    write_color('2. Aplica hielo envuelto en un paño para reducir la hinchazón.', cyan), nl,
-    write_color('3. No intentes enderezar el hueso.', cyan), nl,
-    write_color('4. Busca atención médica inmediata.', cyan), nl.
+manejo_enfermedad(artritis_reumatoide, Recomendaciones) :-
+    Recomendaciones = [
+        'Usa terapias físicas para mantener la movilidad de las articulaciones.',
+        'Toma medicamentos antiinflamatorios según lo recetado por tu médico.',
+        'Evita actividades que causen estrés en las articulaciones.'
+    ].
 
-manejar_opcion_emergencia(6) :-
-    !,  
-    write_color('Primeros auxilios para intoxicación:', green), nl,
-    write_color('1. Llama al servicio de emergencias inmediatamente.', cyan), nl,
-    write_color('2. No induzcas el vómito a menos que lo indique un profesional.', cyan), nl,
-    write_color('3. Si la persona está inconsciente, colócala de lado para evitar asfixia.', cyan), nl.
+manejo_enfermedad(esclerosis_multiple, Recomendaciones) :-
+    Recomendaciones = [
+        'Sigue un plan de tratamiento personalizado con tu neurólogo.',
+        'Mantén una rutina de ejercicio suave para mejorar la movilidad.',
+        'Evita el estrés y descansa lo suficiente.'
+    ].
 
-manejar_opcion_emergencia(7) :-
-    !,  
-    write_color('Regresando al menú principal...', green), nl,
-    sleep(0.5).
+% Tratamientos comunes para enfermedades autoinmunes
+tratamientos_comunes(lupus, Tratamientos) :-
+    Tratamientos = [
+        'Medicamentos inmunosupresores.',
+        'Antiinflamatorios no esteroideos (AINEs).',
+        'Corticosteroides para controlar brotes.'
+    ].
 
-manejar_opcion_emergencia(_) :-
-    !,  
-    write_color('Opción no válida. Por favor, intenta de nuevo.', red), nl.
+tratamientos_comunes(artritis_reumatoide, Tratamientos) :-
+    Tratamientos = [
+        'Medicamentos antirreumáticos modificadores de la enfermedad (FARME).',
+        'Terapias biológicas.',
+        'Fisioterapia y terapia ocupacional.'
+    ].
+
+tratamientos_comunes(esclerosis_multiple, Tratamientos) :-
+    Tratamientos = [
+        'Medicamentos modificadores de la enfermedad (interferones, acetato de glatiramer).',
+        'Terapias para controlar los síntomas (relajantes musculares, antidepresivos).',
+        'Rehabilitación física y cognitiva.'
+    ].
+
+% Consejos para mejorar la calidad de vida
+consejos_calidad_vida(lupus, Consejos) :-
+    Consejos = [
+        'Descansa lo suficiente y evita el estrés.',
+        'Únete a grupos de apoyo para pacientes con lupus.',
+        'Mantén una comunicación abierta con tu médico.'
+    ].
+
+consejos_calidad_vida(artritis_reumatoide, Consejos) :-
+    Consejos = [
+        'Usa dispositivos de asistencia para reducir la carga en las articulaciones.',
+        'Mantén una dieta antiinflamatoria.',
+        'Practica técnicas de relajación para manejar el dolor.'
+    ].
+
+consejos_calidad_vida(esclerosis_multiple, Consejos) :-
+    Consejos = [
+        'Mantén una rutina diaria estructurada.',
+        'Evita el sobrecalentamiento y el estrés.',
+        'Participa en actividades que estimulen la mente.'
+    ].

@@ -1,8 +1,6 @@
 :- dynamic usuario/2.
 
-usuario(user1, _).
 
 :- dynamic historial/4.
 
-historial(user1, gripe, [tos], '02/02/2025').
 

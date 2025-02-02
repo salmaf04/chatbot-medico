@@ -8,6 +8,7 @@
 :- [data/embarazo_cuidado_infantil].
 :- [data/soporte_cancer].
 :- [data/soporte_personas_mayores].
+:- [data/pacientes_enfermedades_autoinmunes].
 :- [core/diagnostico].
 :- [interactuar/interfaz].
 :- [users/usuarios].
