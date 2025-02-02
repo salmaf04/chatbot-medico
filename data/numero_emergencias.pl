@@ -75,7 +75,8 @@ manejar_opcion_pais(10) :-
 
 manejar_opcion_pais(11) :-
     !,  
-    write_color('Regresando al menú anterior...', green), nl.
+    write_color('Regresando al menú anterior...', green), nl,
+    sleep(0.5).
 
 manejar_opcion_pais(_) :-
     !,  
