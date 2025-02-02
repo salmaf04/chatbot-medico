@@ -6,6 +6,7 @@
 :- [data/primeros_auxilios].
 :- [data/numero_emergencias].
 :- [data/embarazo_cuidado_infantil].
+:- [data/soporte_cancer].
 :- [core/diagnostico].
 :- [interactuar/interfaz].
 
