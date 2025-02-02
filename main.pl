@@ -5,6 +5,7 @@
 :- [data/estilo_vida].
 :- [data/informacion_enfermedades].
 :- [data/primeros_auxilios].
+:- [data/numero_emergencias].
 :- [core/diagnostico].
 :- [interactuar/interfaz].
 

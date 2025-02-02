@@ -8,6 +8,7 @@
 :- use_module('../data/medicamentos').
 :- use_module('../data/estilo_vida').
 :- use_module('../data/primeros_auxilios').
+:- use_module('../data/numero_emergencias').
 
 % Predicado para imprimir texto en color
 write_color(Mensaje, Color) :-
@@ -23,17 +24,19 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 6 -> bucle_interaccion ; true).
+    (Opcion \= 7 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
     write_color('Por favor, elige una opción:', blue), 
-    write_color('1. Diagnóstico de síntomas', cyan),
-    write_color('2. Información sobre enfermedades', cyan),
-    write_color('3. Información sobre medicamentos', cyan),
-    write_color('4. Consejos para mejorar tu calidad de vida', cyan),
-    write_color('5. Primeros auxilios', cyan),
-    write_color('6. Salir', red),
+    write_color('1. Número de emergencias', cyan),
+    write_color('2. Primeros auxilios', cyan),
+    write_color('3. Diagnóstico de síntomas', cyan),
+    write_color('4. Información sobre enfermedades', cyan),
+    write_color('5. Información sobre medicamentos', cyan),
+    write_color('6. Consejos para mejorar tu calidad de vida', cyan),
+    
+    write_color('7. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -42,38 +45,24 @@ leer_opcion(Opcion) :-
     read(Opcion),
     nl.  % Añadir nueva línea para claridad
 
-% Manejar la opción elegida por el usuario
 manejar_opcion(1) :-
-    !,  
-    write_color('Introduce tus síntomas separados por comas: ', blue), nl,
-    read(SintomasString),  
-    (   SintomasString \= ""  % Verifica que la cadena no esté vacía
-    ->  procesar_sintomas(SintomasString), !
-    ;   write_color('Por favor, introduce al menos un síntoma.', red), nl,
-        flush_output,  % Vacía el buffer de salida
-        manejar_opcion(1)
-    ).
+!,  
+    write_color('Números de emergencia por país:', green), nl,
+    write_color('1. Cuba', cyan),
+    write_color('2. Argentina', cyan),
+    write_color('3. Uruguay', cyan),
+    write_color('4. Brasil', cyan),
+    write_color('5. España', cyan),
+    write_color('6. Italia', cyan),
+    write_color('7. México', cyan),
+    write_color('8. Estados Unidos', cyan),
+    write_color('9. Francia', cyan),
+    write_color('10. Alemania', cyan),
+    write_color('11. Regresar al menú anterior', red), nl,
+    read(OpcionPais),
+    manejar_opcion_pais(OpcionPais).
 
 manejar_opcion(2) :-
-    !,  
-    write_color('Introduce el nombre de la enfermedad: ', blue), nl,
-    read(Enfermedad),  
-    mostrar_informacion_enfermedad(Enfermedad).
-
-manejar_opcion(3) :-
-    !,  
-    write_color('Introduce el nombre del medicamento: ', blue), nl,
-    read(Medicamento),  
-    mostrar_informacion_medicamento(Medicamento).
-
-manejar_opcion(4) :-
-    !,  
-    write_color('Introduce tu edad: ', blue), nl,
-    read(Edad),  
-    estilo_vida(Edad, Consejo),
-    write_color('Consejo: ', green), write_color(Consejo, yellow), nl.
-
-manejar_opcion(5) :-
     !,  
     write_color('Primeros auxilios: ¿Qué tipo de emergencia necesitas?', blue), nl,
     write_color('1. Quemaduras', cyan),
@@ -85,8 +74,39 @@ manejar_opcion(5) :-
     write_color('7. Regresar al menú principal', red), nl,
     read(OpcionEmergencia),
     manejar_opcion_emergencia(OpcionEmergencia).
-      
+
+% Manejar la opción elegida por el usuario
+manejar_opcion(3) :-
+    !,  
+    write_color('Introduce tus síntomas separados por comas: ', blue), nl,
+    read(SintomasString),  
+    (   SintomasString \= ""  % Verifica que la cadena no esté vacía
+    ->  procesar_sintomas(SintomasString), !
+    ;   write_color('Por favor, introduce al menos un síntoma.', red), nl,
+        flush_output,  % Vacía el buffer de salida
+        manejar_opcion(3)
+    ).
+
+manejar_opcion(4) :-
+    !,  
+    write_color('Introduce el nombre de la enfermedad: ', blue), nl,
+    read(Enfermedad),  
+    mostrar_informacion_enfermedad(Enfermedad).
+
+manejar_opcion(5) :-
+    !,  
+    write_color('Introduce el nombre del medicamento: ', blue), nl,
+    read(Medicamento),  
+    mostrar_informacion_medicamento(Medicamento).
+
 manejar_opcion(6) :-
+    !,  
+    write_color('Introduce tu edad: ', blue), nl,
+    read(Edad),  
+    estilo_vida(Edad, Consejo),
+    write_color('Consejo: ', green), write_color(Consejo, yellow), nl.
+      
+manejar_opcion(7) :-
     !,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
