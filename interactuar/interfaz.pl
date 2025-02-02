@@ -7,6 +7,7 @@
 :- use_module('../data/especialidades'). 
 :- use_module('../data/medicamentos').
 :- use_module('../data/estilo_vida').
+:- use_module('../data/primeros_auxilios').
 
 % Predicado para imprimir texto en color
 write_color(Mensaje, Color) :-
@@ -22,7 +23,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 5 -> bucle_interaccion ; true).
+    (Opcion \= 6 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -31,7 +32,8 @@ mostrar_opciones :-
     write_color('2. Información sobre enfermedades', cyan),
     write_color('3. Información sobre medicamentos', cyan),
     write_color('4. Consejos para mejorar tu calidad de vida', cyan),
-    write_color('5. Salir', red),
+    write_color('5. Primeros auxilios', cyan),
+    write_color('6. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -70,8 +72,21 @@ manejar_opcion(4) :-
     read(Edad),  
     estilo_vida(Edad, Consejo),
     write_color('Consejo: ', green), write_color(Consejo, yellow), nl.
-      
+
 manejar_opcion(5) :-
+    !,  
+    write_color('Primeros auxilios: ¿Qué tipo de emergencia necesitas?', blue), nl,
+    write_color('1. Quemaduras', cyan),
+    write_color('2. Cortes y heridas', cyan),
+    write_color('3. Atragantamiento', cyan),
+    write_color('4. Desmayos', cyan),
+    write_color('5. Fracturas', cyan),
+    write_color('6. Intoxicación', cyan),
+    write_color('7. Regresar al menú principal', red), nl,
+    read(OpcionEmergencia),
+    manejar_opcion_emergencia(OpcionEmergencia).
+      
+manejar_opcion(6) :-
     !,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
