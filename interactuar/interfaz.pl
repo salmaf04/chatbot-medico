@@ -1,4 +1,4 @@
-:- module(interfaz, [interfaz/0, procesar_sintomas/1, write_color/2]).
+:- module(interfaz, [interfaz/0, procesar_sintomas/1, write_color/2, manejar_opcion/1]).
 
 
 :- use_module('../core/diagnostico').
@@ -13,6 +13,7 @@
 :- use_module('../data/soporte_cancer').
 :- use_module('../data/soporte_personas_mayores').
 :- use_module('../data/soporte_estudiantes').
+:- use_module('../users/usuarios').
 
 % Predicado para imprimir texto en color
 write_color(Mensaje, Color) :-
@@ -28,7 +29,7 @@ bucle_interaccion :-
     mostrar_opciones,
     leer_opcion(Opcion),
     manejar_opcion(Opcion),
-    (Opcion \= 11 -> bucle_interaccion ; true).
+    (Opcion \= 13 -> bucle_interaccion ; true).
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
@@ -43,7 +44,9 @@ mostrar_opciones :-
     write_color('8. Soporte para estudiantes', cyan),
     write_color('9. Soporte para personas mayores', cyan),
     write_color('10. Soporte para pacientes con cáncer', cyan),
-    write_color('11. Salir', red),
+    write_color('11. Crear usuario', cyan),  
+    write_color('12. Ver historial clínico', cyan),
+    write_color('13. Salir', red),
     nl.
 
 % Leer la opción elegida por el usuario
@@ -156,9 +159,33 @@ manejar_opcion(10) :-
     write_color('4. Regresar al menú principal', red), nl,
     read(Opcion),
     manejar_opcion_cancer(Opcion).
-      
+
 manejar_opcion(11) :-
     !,
+    write_color('Crear usuario:', green), nl,
+    write_color('Introduce un ID único para el usuario (por ejemplo, "user123"): ', blue), nl,
+    read(ID),
+    write_color('Introduce el nombre del usuario: ', blue), nl,
+    read(Nombre),
+    crear_usuario(ID, Nombre).
+
+manejar_opcion(12) :-
+    !,
+    write_color('Ver historial clínico:', green), nl,
+    write_color('Introduce el ID del usuario: ', blue), nl,
+    read(ID),
+    (   obtener_historial(ID, Historial)
+    ->  (   Historial = []
+        ->  write_color('No se encontró historial clínico para este usuario.', red), nl
+        ;   write_color('Historial clínico:', green), nl,
+            imprimir_historial(Historial)
+        )
+    ;   write_color('Usuario no encontrado.', red), nl
+    ).
+      
+manejar_opcion(13) :-
+    !,
+    guardar_usuarios,
     write_color('Gracias por usar el Asistente Médico. ¡Adiós!', green), nl.
 
 manejar_opcion(_) :-
@@ -199,8 +226,31 @@ procesar_sintomas(SintomasString) :-
     ->  write_color('Lo siento, no pude identificar los síntomas, intenta de nuevo.', red), nl
     ;   write_color('Parece que podrías tener: ', green), write_color(Enfermedad, yellow), nl,
         write_color('Tratamiento recomendado: ', green), sugerir_tratamiento(Enfermedad), nl,
-        recomendacion_especialista(Enfermedad)
-).
+        recomendacion_especialista(Enfermedad),
+        write_color('¿Deseas guardar este diagnóstico en tu historial clínico? (s/n): ', blue), nl,
+        read(Respuesta),
+        (   Respuesta = 's'
+        ->  write_color('Introduce tu ID de usuario: ', blue), nl,
+            read(ID),
+            obtener_fecha_actual(Fecha),  % Obtener la fecha actual
+            guardar_historial(ID, Enfermedad, SintomasAtoms, Fecha),
+            write_color('Diagnóstico guardado en tu historial clínico.', green), nl
+        ;   true
+        )
+    ).
+
+% Predicado para obtener la fecha actual en formato DD/MM/AAAA
+obtener_fecha_actual(Fecha) :-
+    get_time(Tiempo),
+    format_time(atom(Fecha), '%d/%m/%Y', Tiempo).
+
+% Predicado imprimir_historial:
+imprimir_historial([]).
+imprimir_historial([(Enfermedad, Sintomas, Fecha) | Resto]) :-
+    write_color('Enfermedad: ', green), write_color(Enfermedad, yellow), nl,
+    write_color('Síntomas: ', green), imprimir_lista_sin_corchetes(Sintomas), nl,
+    write_color('Fecha de diagnóstico: ', green), write_color(Fecha, yellow), nl, nl,
+    imprimir_historial(Resto).
 
 % Predicado para imprimir cada elemento de la lista en una nueva línea
 imprimir_lista([]).

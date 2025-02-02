@@ -1,0 +1,16 @@
+:- dynamic usuario/2.
+
+usuario(user123, _).
+usuario(user123, _).
+usuario(user123, _).
+usuario(user123, _).
+usuario(user1, _).
+usuario(user2, _).
+usuario(user3, _).
+
+:- dynamic historial/4.
+
+historial(user123, gripe, [tos], '02/02/2025').
+historial(user123, alergia, [estornudos, 'ganglios inflamados'], '02/02/2025').
+historial(user1, alergia, ['ganglios inflamados'], '02/02/2025').
+
