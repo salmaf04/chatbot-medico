@@ -14,6 +14,7 @@
 :- use_module('../data/soporte_personas_mayores').
 :- use_module('../data/soporte_estudiantes').
 :- use_module('../data/pacientes_enfermedades_autoinmunes').
+:- use_module('../data/recomendaciones_viajeros').
 :- use_module('../users/usuarios').
 
 % Predicado para imprimir texto en color
@@ -46,6 +47,7 @@ mostrar_opciones :-
     write_color('9. Soporte para personas mayores', cyan),
     write_color('10. Soporte para pacientes con cáncer', cyan),
     write_color('11. Soporte para pacientes con enfermedades autoinmunes', cyan),
+    write_color('12. Recomendaciones para viajeros', cyan),
     write_color('15. Crear usuario', cyan),  
     write_color('16. Ver historial clínico', cyan),
     write_color('17. Eliminar usuario', cyan),
@@ -173,6 +175,18 @@ manejar_opcion(11) :-
     write_color('5. Regresar al menú principal', red), nl,
     read(Opcion),
     manejar_opcion_autoinmunes(Opcion).
+
+% Manejar la opción elegida por el usuario
+manejar_opcion(12) :-
+    !,
+    write_color('Recomendaciones para viajeros:', green), nl,
+    write_color('1. Consejos de salud para viajeros', cyan),
+    write_color('2. Prevención de enfermedades en el extranjero', cyan),
+    write_color('3. Botiquín de viaje', cyan),
+    write_color('4. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_viajeros(Opcion).
+
 
 manejar_opcion(15) :-
     !,
