@@ -16,6 +16,7 @@
 :- use_module('../data/pacientes_enfermedades_autoinmunes').
 :- use_module('../data/recomendaciones_viajeros').
 :- use_module('../data/soporte_deportistas').
+:- use_module('../data/recomendaciones_mascotas').
 :- use_module('../users/usuarios').
 
 % Predicado para imprimir texto en color
@@ -50,7 +51,8 @@ mostrar_opciones :-
     write_color('10. Soporte para pacientes con cáncer', cyan),
     write_color('11. Soporte para pacientes con enfermedades autoinmunes', cyan),
     write_color('12. Recomendaciones para viajeros', cyan),
-     write_color('13. Soporte para deportistas', cyan),
+    write_color('13. Soporte para deportistas', cyan),
+    write_color('14. Recomendaciones de salud para mascotas', cyan),
     write_color('15. Crear usuario', cyan),  
     write_color('16. Ver historial clínico', cyan),
     write_color('17. Eliminar usuario', cyan),
@@ -201,8 +203,17 @@ manejar_opcion(13) :-
     read(Opcion),
     manejar_opcion_deportistas(Opcion).
 
-
-
+% Manejar la opción elegida por el usuario
+manejar_opcion(14) :-
+    !,
+    write_color('Recomendaciones de salud para mascotas:', green), nl,
+    write_color('1. Cuidado general para mascotas', cyan),
+    write_color('2. Alimentación para mascotas', cyan),
+    write_color('3. Prevención de enfermedades', cyan),
+    write_color('4. Primeros auxilios para mascotas', cyan),
+    write_color('5. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_mascotas(Opcion).
 
 manejar_opcion(15) :-
     !,
