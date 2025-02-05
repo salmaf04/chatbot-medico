@@ -15,6 +15,7 @@
 :- use_module('../data/soporte_estudiantes').
 :- use_module('../data/pacientes_enfermedades_autoinmunes').
 :- use_module('../data/recomendaciones_viajeros').
+:- use_module('../data/soporte_deportistas').
 :- use_module('../users/usuarios').
 
 % Predicado para imprimir texto en color
@@ -35,6 +36,7 @@ bucle_interaccion :-
 
 % Mostrar las opciones disponibles al usuario
 mostrar_opciones :-
+    write_color('Cualquier texto con más de una palabra debe ponerlo entre comillas simples', yellow),
     write_color('Por favor, elige una opción:', blue), 
     write_color('1. Número de emergencias', cyan),
     write_color('2. Primeros auxilios', cyan),
@@ -48,6 +50,7 @@ mostrar_opciones :-
     write_color('10. Soporte para pacientes con cáncer', cyan),
     write_color('11. Soporte para pacientes con enfermedades autoinmunes', cyan),
     write_color('12. Recomendaciones para viajeros', cyan),
+     write_color('13. Soporte para deportistas', cyan),
     write_color('15. Crear usuario', cyan),  
     write_color('16. Ver historial clínico', cyan),
     write_color('17. Eliminar usuario', cyan),
@@ -186,6 +189,19 @@ manejar_opcion(12) :-
     write_color('4. Regresar al menú principal', red), nl,
     read(Opcion),
     manejar_opcion_viajeros(Opcion).
+
+% Manejar la opción elegida por el usuario
+manejar_opcion(13) :-
+    !,
+    write_color('Soporte para deportistas:', green), nl,
+    write_color('1. Nutrición para deportistas', cyan),
+    write_color('2. Cuidado físico para deportistas', cyan),
+    write_color('3. Prevención y manejo de lesiones deportivas', cyan),
+    write_color('4. Regresar al menú principal', red), nl,
+    read(Opcion),
+    manejar_opcion_deportistas(Opcion).
+
+
 
 
 manejar_opcion(15) :-
